@@ -8,29 +8,49 @@ use core\Utils;
 use core\ParamUtils;
 use core\Validator;
 use app\forms\UserEditForm;
-use Couchbase\Role;
 use core\SessionUtils;
 
 class UserEditCtrl {
 
     private $form; //dane formularza
+    private $v;
 
     public function __construct() {
         //stworzenie potrzebnych obiektów
         $this->form = new UserEditForm();
+        $this->v=new Validator();
     }
 
     // Walidacja danych przed zapisem (nowe dane lub edycja).
     public function validateSave() {
         //0. Pobranie parametrów
-        $this->form->id = ParamUtils::getFromRequest('id', true, 'Błędne wywołanie aplikacji1');
-        $this->form->login = ParamUtils::getFromRequest('login', true, 'Błędne wywołanie aplikacji2');
-        $this->form->password = ParamUtils::getFromRequest('password', true, 'Błędne wywołanie aplikacji3');
-        $this->form->name = ParamUtils::getFromRequest('name', true, 'Błędne wywołanie aplikacji4');
-        $this->form->surname = ParamUtils::getFromRequest('surname', true, 'Błędne wywołanie aplikacji5');
-        $this->form->email = ParamUtils::getFromRequest('email', true, 'Błędne wywołanie aplikacji6');
-        $this->form->active = ParamUtils::getFromPost('active', true, 'Błędne wywołanie aplikacji7');
-        $this->form->role = ParamUtils::getFromPost('role', true, 'Błędne wywołanie aplikacji8');
+        $this->form->id = ParamUtils::getFromRequest('id', true, 'Błędne wywołanie aplikacji');
+        $this->form->login = $this->v->validateFromRequest('login',[
+            'min_length' => 5,
+            'max_length' => 13,
+            'validator_message'=>'Niepoprawny login',
+        ]);
+        $this->form->password = $this->v->validateFromRequest('password',[
+            'min_length' => 5,
+            'max_length' => 20,
+            'validator_message'=>'Niepoprawne hasło',
+        ]);
+        $this->form->name = $this->v->validateFromRequest('name',[
+            'min_length' => 3,
+            'max_length' => 20,
+            'validator_message'=>'Niepoprawne imię',
+        ]);
+        $this->form->surname = $this->v->validateFromRequest('surname',[
+            'min_length' => 3,
+            'max_length' => 20,
+            'validator_message'=>'Niepoprawne nazwisko',
+        ]);
+        $this->form->email = $this->v->validateFromRequest('email',[
+            'email'=>true,
+            'validator_message'=>'Niepoprawny adres e-mail',
+        ]);
+        $this->form->active = ParamUtils::getFromPost('active', true, 'Błędne wywołanie aplikacji');
+        $this->form->role = ParamUtils::getFromPost('role', true, 'Błędne wywołanie aplikacji');
 
 
         if (App::getMessages()->isError())
@@ -43,11 +63,17 @@ class UserEditCtrl {
             Utils::addErrorMessage('Należy wypełnić wszystkie pola');
         }
 
+
         if (App::getMessages()->isError())
             return false;
 
-        // 2. sprawdzenie poprawności przekazanych parametrów
-
+         //2. sprawdzenie poprawności przekazanych parametrów
+        if(Utils::doesLoginExistsInDatabaseForUserEdit($this->form->id,$this->form->login)){
+            Utils::addErrorMessage('Na podany login jest już zarejestrowane konto');
+        }
+        if(Utils::doesEmailExistsInDatabaseForUserEdit($this->form->id,$this->form->email)){
+            Utils::addErrorMessage('Na podany e-mail jest już zarejestrowane konto');
+        }
 
 
 
@@ -112,11 +138,11 @@ class UserEditCtrl {
                 if (App::getConf()->debug)
                     Utils::addErrorMessage($e->getMessage());
             }
+            // 3. Przekierowanie na stronę listy osób
+            App::getRouter()->redirectTo('userList');
         }
-
-        // 3. Przekierowanie na stronę listy osób
-        App::getRouter()->forwardTo('userList');
     }
+
 
     public function action_userSave()
     {
@@ -148,6 +174,7 @@ class UserEditCtrl {
                     ], [
                         "idUser" => $this->form->id
                     ]);
+                    RoleUtils::changeRoleInDatabase($this->form->login,$this->form->role);
                 }
                 Utils::addInfoMessage('Pomyślnie zapisano rekord');
             } catch (\PDOException $e) {
@@ -157,7 +184,7 @@ class UserEditCtrl {
             }
 
             // 3b. Po zapisie przejdź na stronę listy osób (w ramach tego samego żądania http)
-            App::getRouter()->forwardTo('personList');
+            App::getRouter()->forwardTo('userList');
         } else {
             // 3c. Gdy błąd walidacji to pozostań na stronie
             $this->generateView();

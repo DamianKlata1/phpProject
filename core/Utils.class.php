@@ -62,12 +62,39 @@ class Utils {
             "e-mail" => $email
         ]);
     }
+    public static function doesLoginExistsInDatabaseForUserEdit($id,$login){
+        return App::getDB()->has("user",[
+            "AND" =>[
+                "login" => $login,
+                "idUser[!]" => $id
+            ]]);
+    }
+    public static function doesEmailExistsInDatabaseForUserEdit($id,$email){
+        return App::getDB()->has("user",[
+            "AND" =>[
+                "e-mail" => $email,
+                "idUser[!]" =>$id
+        ]]);
+    }
     public static function isUserActive($login){
         return App::getDb()->has("user",[
             "AND" =>[
-            "active" => "yes",
-            "login" => $login
+                "active" => "yes",
+                "login" => $login
             ]]);
     }
+    public static function getUserIdByLogin($login){
+        return App::getDB()->get("user", "idUser", [
+            "login"=>$login
+        ]);
+    }
+    public static function isBookAvailable($bookId){
+        return App::getDB()->has("book",[
+            "AND" =>[
+                "available" => "yes",
+                "idBook" => $bookId
+            ]]);
+    }
+
 
 }

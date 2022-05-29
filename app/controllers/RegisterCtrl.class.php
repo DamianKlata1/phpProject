@@ -6,27 +6,51 @@ use core\App;
 use core\Utils;
 use core\RoleUtils;
 use core\ParamUtils;
-use app\transfer\User;
 use app\forms\RegisterForm;
-use core\SessionUtils;
-use core\Messages;
-use Couchbase\Role;
+use core\Validator;
+
 
 class RegisterCtrl{
+
     private $form;
+    private $v;
 
     public function __construct(){
         //stworzenie potrzebnych obiektów
         $this->form = new RegisterForm();
+        $this->v=new Validator();
     }
 
     public function validate() {
-        $this->form->login = ParamUtils::getFromRequest('login');
-        $this->form->pass1 = ParamUtils::getFromRequest('pass1');
-        $this->form->pass2 = ParamUtils::getFromRequest('pass2');
-        $this->form->email = ParamUtils::getFromRequest('email');
-        $this->form->name = ParamUtils::getFromRequest('name');
-        $this->form->surname = ParamUtils::getFromRequest('surname');
+        $this->form->login = $this->v->validateFromRequest('login',[
+            'min_length' => 5,
+            'max_length' => 13,
+            'validator_message'=>'Niepoprawny login',
+        ]);
+        $this->form->pass1 = $this->v->validateFromRequest('pass1',[
+            'min_length' => 5,
+            'max_length' => 20,
+            'validator_message'=>'Niepoprawne hasło',
+        ]);
+        $this->form->pass2 = $this->v->validateFromRequest('pass2',[
+            'min_length' => 5,
+            'max_length' => 20,
+            'validator_message'=>'Niepoprawne hasło',
+        ]);
+        $this->form->email = $this->v->validateFromRequest('email',[
+            'email'=>true,
+            'validator_message'=>'Niepoprawny adres e-mail',
+        ]);
+        $this->form->name = $this->v->validateFromRequest('name',[
+            'min_length' => 3,
+            'max_length' => 20,
+            'validator_message'=>'Niepoprawne imię',
+        ]);
+        $this->form->surname = $this->v->validateFromRequest('surname',[
+            'min_length' => 3,
+            'max_length' => 20,
+            'validator_message'=>'Niepoprawne nazwisko',
+        ]);
 
         if (!isset($this->form->login))
             return false;

@@ -36,6 +36,27 @@ class RoleUtils {
                 Utils::addErrorMessage($e->getMessage());
         }
     }
+    public static function changeRoleInDatabase($forWho,$role){
+        $idUserFromDatabase=App::getDB()->get("user", "idUser", [
+            "login" => $forWho
+        ]);
+        $idRoleFromDatabase=App::getDB()->get("role", "idRole", [
+            "nameOfRole" => $role
+        ]);
+
+        try {
+            App::getDB()->update("roleofuser", [
+                "idRole" => $idRoleFromDatabase
+            ],[
+                "idUser" => $idUserFromDatabase
+            ]);
+        }
+        catch (\PDOException $e) {
+            Utils::addErrorMessage('Wystąpił nieoczekiwany błąd podczas edycji rekordu');
+            if (App::getConf()->debug)
+                Utils::addErrorMessage($e->getMessage());
+        }
+    }
 
     public static function checkRoleInDatabase($forWho){
         $roleInDatabase= App::getDB()->get(

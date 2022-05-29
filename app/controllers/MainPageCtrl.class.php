@@ -12,70 +12,80 @@
 namespace app\controllers;
 
 //zamieniamy zatem 'require' na 'use' wskazując jedynie przestrzeń nazw, w której znajduje się klasa
-use app\forms\MainPageForm;
+use app\forms\BookSearchForm;
 use core\App;
 use core\Utils;
 use core\ParamUtils;
-use app\forms\PersonSearchForm;
-use core\Config;
 use core\SessionUtils;
 
 class MainPageCtrl {
 
-    private $form;   //dane formularza (do obliczeń i dla widoku)
+    private $form; //dane formularza wyszukiwania
+    private $records; //rekordy pobrane z bazy danych
 
-    /**
-     * Konstruktor - inicjalizacja właściwości
-     */
-    public function __construct(){
+    public function __construct() {
         //stworzenie potrzebnych obiektów
-        $this->form = new MainPageForm();
+        $this->form = new BookSearchForm();
     }
 
-    /**
-     * Pobranie parametrów
-     */
-    public function getParams(){
+    public function validate() {
+        // 1. sprawdzenie, czy parametry zostały przekazane
+        // - nie trzeba sprawdzać
         $this->form->searchBar = ParamUtils::getFromRequest('searchBar');
 
+        // 2. sprawdzenie poprawności przekazanych parametrów
+        // - nie trzeba sprawdzać
+
+        return !App::getMessages()->isError();
     }
 
-    /**
-     * Walidacja parametrów
-     * @return true jeśli brak błedów, false w przeciwnym wypadku
-     */
-    public function validate() {
-        // sprawdzenie, czy parametry zostały przekazane
-        if (! (isset ( $this->form->searchBar ) )) {
-            // sytuacja wystąpi kiedy np. kontroler zostanie wywołany bezpośrednio - nie z formularza
-            return false;
+
+    public function action_bookList() {
+        // 1. Walidacja danych formularza (z pobraniem)
+        // - W tej aplikacji walidacja nie jest potrzebna, ponieważ nie wystąpią błedy podczas podawania nazwiska.
+        //   Jednak pozostawiono ją, ponieważ gdyby uzytkownik wprowadzał np. datę, lub wartość numeryczną, to trzeba
+        //   odpowiednio zareagować wyświetlając odpowiednią informację (poprzez obiekt wiadomości Messages)
+        $this->validate();
+
+        // 2. Przygotowanie mapy z parametrami wyszukiwania (nazwa_kolumny => wartość)
+        $search_params = []; //przygotowanie pustej struktury (aby była dostępna nawet gdy nie będzie zawierała wierszy)
+        if (isset($this->form->searchBar) && strlen($this->form->searchBar) > 0) {
+            $search_params['title[~]'] = $this->form->searchBar . '%'; // dodanie symbolu % zastępuje dowolny ciąg znaków na końcu
         }
 
-        // sprawdzenie, czy potrzebne wartości zostały przekazane
-        if ($this->form->searchBar == "") {
-            Utils::addErrorMessage('Brak wyszukania');
+        // 3. Pobranie listy rekordów z bazy danych
+        // W tym wypadku zawsze wyświetlamy listę osób bez względu na to, czy dane wprowadzone w formularzu wyszukiwania są poprawne.
+        // Dlatego pobranie nie jest uwarunkowane poprawnością walidacji (jak miało to miejsce w kalkulatorze)
+        //przygotowanie frazy where na wypadek większej liczby parametrów
+        $num_params = sizeof($search_params);
+        if ($num_params > 1) {
+            $where = ["AND" => &$search_params];
+        } else {
+            $where = &$search_params;
+        }
+        //dodanie frazy sortującej po loginie
+        $where ["ORDER"] = "title";
+        //wykonanie zapytania
+
+        try {
+            $this->records = App::getDB()->select("book",
+                [
+                    "idBook",
+                    "title",
+                    "author",
+                    "releaseDate",
+                    "publisher",
+                    "available",
+                    "page"
+                ],
+                $where);
+        } catch (\PDOException $e) {
+            Utils::addErrorMessage('Wystąpił błąd podczas pobierania rekordów');
+            if (App::getConf()->debug)
+                Utils::addErrorMessage($e->getMessage());
         }
 
-
-        return ! getMessages()->isError();
-    }
-
-    /**
-     * Pobranie wartości, walidacja, obliczenie i wyświetlenie
-     */
-    public function action_searchBooks(){
-
-        $this->getParams();
-
-        if ($this->validate()) {
-
-
-            //wykonanie operacji
-            Utils::addInfoMessage("Wykonuję operację");
-
-
-        }
-
+        // 4. wygeneruj widok
         $this->generateView();
     }
 
@@ -89,13 +99,14 @@ class MainPageCtrl {
      * Wygenerowanie widoku
      */
     public function generateView(){
-       // if (count(App::getConf()->roles)>0){
+
         App::getSmarty()->assign('user',SessionUtils::loadObject('user',true));
-       // }
 
         App::getSmarty()->assign('page_title','Biblioteka Online');
 
-        App::getSmarty()->assign('form',$this->form);
+        App::getSmarty()->assign('searchForm', $this->form); // dane formularza (wyszukiwania w tym wypadku)
+
+        App::getSmarty()->assign('books', $this->records);  // lista rekordów z bazy danych
 
         App::getSmarty()->display('MainPageView.tpl');
     }

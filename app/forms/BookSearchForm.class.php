@@ -2,6 +2,6 @@
 
 namespace app\forms;
 
-class MainPageForm {
+class BookSearchForm{
     public $searchBar;
 }

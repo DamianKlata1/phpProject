@@ -6,7 +6,11 @@
 
         <header>
             <div class="inner">
-                <h2>Edycja użytkownika</h2>
+                {if !empty($form->id)}
+                    <h2>Edycja użytkownika</h2>
+                {else}
+                    <h2>Dodanie użytkownika</h2>
+                {/if}
                 <form method="post" action="{$conf->action_root}userSave">
                     <div class="row gtr-uniform">
                         <div class="col-6 col-12-xsmall">
@@ -27,7 +31,7 @@
 
                             <label for="demo-name">Konto aktywne</label>
                             <div class="col-4 col-12-small">
-                                <input type="radio" id="yes" name="active" {if (strcmp($form->active,"yes")==0)}checked{/if} value="yes">
+                                <input type="radio" id="yes" name="active" {if (strcmp($form->active,"yes")==0)||!isset($form->active)}checked{/if} value="yes">
                                 <label for="yes">Tak</label>
                             </div>
 
@@ -39,12 +43,15 @@
                             <label for="role">Rola</label>
                             <select name="role" id="role">
                                 {foreach $rolesFromDatabase as $r}
-                                <option value="{$r['nameOfRole']}" {if (strcmp($r['nameOfRole'],$form->role)==0)}selected{/if}>{$r['nameOfRole']}</option>
+                                    {if strcmp($r['nameOfRole'],"guest")==0}
+                                        {else}
+                                            <option value="{$r['nameOfRole']}" {if (strcmp($r['nameOfRole'],$form->role)==0)}selected{/if}>{$r['nameOfRole']}</option>
+                                    {/if}
                                 {/foreach}
                             </select>
 
                             <div class="col-6 col-12-xsmall">
-                                <input type="submit" value="Edytuj" class="button primary"></li>
+                                <input type="submit" value="{if !empty($form->id)}Edytuj{else}Dodaj{/if}" class="button primary"></li>
                             </div>
                         </div>
                         {include file='messages.tpl'}

@@ -7,76 +7,62 @@
 		{include file='messages.tpl'}
 		<h2>Biblioteka Online</h2>
 		<p>Wyszukaj książke po tytule lub autorze:</p>
-		<form method="post" action="{$conf->action_root}searchBooks">
+		<form method="post" action="{$conf->action_root}bookList">
 			<div class="row gtr-uniform">
 				<div class="col-6 col-12-xsmall">
-					<input type="text" name="searchBar" id="searchBar" value="" /><br>
+					<input type="text" name="searchBar" id="searchBar" value="{$searchForm->searchBar}" /><br>
 					<input type="submit" value="Szukaj" class="button primary"></li>
-
 				</div>
 			</div></form>
 	</div>
 </section>
 
-<!-- Wrapper -->
-<section id="wrapper">
+    <!-- Wrapper -->
+{*    <section id="wrapper">*}
 
-	<!-- One -->
-	<section id="one" class="wrapper spotlight style1">
-		<div class="inner">
+        <!-- One -->
+        <section id="one" class="wrapper spotlight style1">
+            <div class="inner">
 
-			<table>
-				<thead>
-				<tr>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Price</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr>
-					<td>Item One</td>
-					<td>Ante turpis integer aliquet porttitor.</td>
-					<td>29.99</td>
-				</tr>
-				<tr>
-					<td>Item Two</td>
-					<td>Vis ac commodo adipiscing arcu aliquet.</td>
-					<td>19.99</td>
-				</tr>
-				<tr>
-					<td>Item Three</td>
-					<td> Morbi faucibus arcu accumsan lorem.</td>
-					<td>29.99</td>
-				</tr>
-				<tr>
-					<td>Item Four</td>
-					<td>Vitae integer tempus condimentum.</td>
-					<td>19.99</td>
-				</tr>
-				<tr>
-					<td>Item Five</td>
-					<td>Ante turpis integer aliquet porttitor.</td>
-					<td>29.99</td>
-				</tr>
-				</tbody>
-				<tfoot>
-				<tr>
-					<td colspan="2"></td>
-					<td>100.00</td>
-				</tr>
-				</tfoot>
-			</table>
+	{if !empty($books)}
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Tytuł</th>
+                        <th>Autor</th>
+                        <th>Wydawnictwo</th>
+                        <th>Data opublikowania</th>
+                        <th>Liczba Stron</th>
+						<th>Opcje</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $books as $book}
+                        {if strcmp($book["available"],"yes")==0}
+                        {strip}
+                            <tr>
+                                <td>{$book["title"]}</td>
+                                <td>{$book["author"]}</td>
+                                <td>{$book["publisher"]}</td>
+                                <td>{$book["releaseDate"]}</td>
+                                <td>{$book["page"]}</td>
+                                <td>
+                                    <a class="button small" href="{$conf->action_url}bookBorrow/{$book['idBook']}">Zarezerwuj</a>
+                                </td>
+                            </tr>
+                        {/strip}
+                        {/if}
+                    {/foreach}
 
+                    </tbody>
+                </table>
+	{/if}
 
-		</div>
-	</section>
+            </div>
 
-	<!-- Two -->
+        </section>
 
-
-	<!-- Three -->
-
-</section>
-
+        <!-- Two -->
+        <!-- Three -->
+{*    </section>*}
 {/block}

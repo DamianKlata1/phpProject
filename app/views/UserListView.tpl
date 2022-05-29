@@ -9,6 +9,7 @@
                     <div class="col-6 col-12-xsmall">
                         <input type="text" name="login" id="login" value="{$searchForm->login}" /><br>
                         <input type="submit" value="Szukaj" class="button primary"></li>
+                        <a class="button primary" href="{$conf->action_url}userNew">Dodaj użytkownika</a>
                     </div>
                 </div></form>
         </div>
@@ -46,8 +47,6 @@
 
                                 <td>
                                     <a class="button small" href="{$conf->action_url}userEdit/{$u['idUser']}">Edytuj</a>
-                                    &nbsp;
-                                    <a class="button small" href="{$conf->action_url}userDeactivate/{$u['idUser']}">Dezaktywuj</a>
                                 </td>
                             </tr>
                         {/strip}
@@ -58,36 +57,9 @@
 
 
             </div>
+
         </section>
-
         <!-- Two -->
-
-
         <!-- Three -->
-
 {*    </section>*}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {/block}

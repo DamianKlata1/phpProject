@@ -19,7 +19,7 @@
 
     <!-- Header -->
     <header id="header" class="alt">
-        <h1><a href="{$conf->app_url}/index.php">Biblioteka Online</a></h1>
+        <h1><a href="{$conf->action_root}mainPageShow">Biblioteka Online</a></h1>
         <nav>
             <a href="#menu">Menu</a>
         </nav>
@@ -35,6 +35,12 @@
                     <li><a href="{$conf->action_root}logout">Wyloguj się</a></li>
                     {if strcmp($user->role,"systemAdmin")==0}
                         <li><a href="{$conf->action_root}userList">Zarządzaj systemem</a></li>
+                    {/if}
+                    {if strcmp($user->role,"user")==0}
+                        <li><a href="{$conf->action_root}transactionUserShow">Moje transakcje</a></li>
+                    {/if}
+                    {if strcmp($user->role,"libraryAdmin")==0}
+                        <li><a href="{$conf->action_root}transactionAdminShow">Transakcje w systemie</a></li>
                     {/if}
 
                 {else}

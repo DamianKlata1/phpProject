@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.1.0, created on 2022-05-28 15:36:46
+/* Smarty version 4.1.0, created on 2022-05-29 22:27:51
   from 'E:\xampp\htdocs\projectPHP\app\views\templates\main.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.1.0',
-  'unifunc' => 'content_6292256e5d1118_51012571',
+  'unifunc' => 'content_6293d7479b3ec5_43268955',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'dca6c32ce39b76387d8bcdc712b31749bdbb7349' => 
     array (
       0 => 'E:\\xampp\\htdocs\\projectPHP\\app\\views\\templates\\main.tpl',
-      1 => 1653744729,
+      1 => 1653856069,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6292256e5d1118_51012571 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6293d7479b3ec5_43268955 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, false);
 ?>
@@ -48,8 +48,8 @@ $_smarty_tpl->inheritance->init($_smarty_tpl, false);
 
     <!-- Header -->
     <header id="header" class="alt">
-        <h1><a href="<?php echo $_smarty_tpl->tpl_vars['conf']->value->app_url;?>
-/index.php">Biblioteka Online</a></h1>
+        <h1><a href="<?php echo $_smarty_tpl->tpl_vars['conf']->value->action_root;?>
+mainPageShow">Biblioteka Online</a></h1>
         <nav>
             <a href="#menu">Menu</a>
         </nav>
@@ -70,6 +70,14 @@ logout">Wyloguj się</a></li>
                         <li><a href="<?php echo $_smarty_tpl->tpl_vars['conf']->value->action_root;?>
 userList">Zarządzaj systemem</a></li>
                     <?php }?>
+                    <?php if (strcmp($_smarty_tpl->tpl_vars['user']->value->role,"user") == 0) {?>
+                        <li><a href="<?php echo $_smarty_tpl->tpl_vars['conf']->value->action_root;?>
+transactionUserShow">Moje transakcje</a></li>
+                    <?php }?>
+                    <?php if (strcmp($_smarty_tpl->tpl_vars['user']->value->role,"libraryAdmin") == 0) {?>
+                        <li><a href="<?php echo $_smarty_tpl->tpl_vars['conf']->value->action_root;?>
+transactionAdminShow">Transakcje w systemie</a></li>
+                    <?php }?>
 
                 <?php } else { ?>
                     <li>rola : gość</li>
@@ -85,7 +93,7 @@ mainPageShow">Strona główna</a></li>
         </div>
     </nav>
     <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_19267115656292256e5cbe63_95873976', 'content');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_6037920476293d7479af538_37027446', 'content');
 ?>
 
 
@@ -162,12 +170,12 @@ $_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_19267115656292256e
 </body>
 </html><?php }
 /* {block 'content'} */
-class Block_19267115656292256e5cbe63_95873976 extends Smarty_Internal_Block
+class Block_6037920476293d7479af538_37027446 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_19267115656292256e5cbe63_95873976',
+    0 => 'Block_6037920476293d7479af538_37027446',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
