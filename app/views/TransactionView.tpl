@@ -33,11 +33,25 @@
                                     <td>
                                         {if !isset($transaction["borrowDate"])&&!isset($transaction["returnDate"])
                                         &&!isset($transaction["cancelReservationDate"])}
+
                                         <a class="button small" href="{$conf->action_url}bookBorrowCancel/
                                             {$transaction['idTransaction']}/{$transaction['idBook']}">Odrezerwuj</a>
-                                            {else}
-                                            <p>Transakcja zakończona</p>
+
                                         {/if}
+
+                                        {if isset($transaction["reservationDate"])&&(isset($transaction["returnDate"])
+                                        ||isset($transaction["cancelReservationDate"]))}
+
+                                            <p>Transakcja zakończona</p>
+
+                                        {/if}
+
+                                        {if isset($transaction["borrowDate"])&&!isset($transaction["returnDate"])}
+
+                                            <p>Transakcja w toku</p>
+
+                                        {/if}
+
                                     </td>
                                 </tr>
                             {/strip}

@@ -5,7 +5,7 @@ namespace app\controllers;
 use core\App;
 use core\Utils;
 use core\ParamUtils;
-use app\forms\UserSearchForm;
+use app\forms\SearchForm;
 use core\SessionUtils;
 
 class UserListCtrl {
@@ -15,13 +15,13 @@ class UserListCtrl {
 
     public function __construct() {
         //stworzenie potrzebnych obiektów
-        $this->form = new UserSearchForm();
+        $this->form = new SearchForm();
     }
 
     public function validate() {
         // 1. sprawdzenie, czy parametry zostały przekazane
         // - nie trzeba sprawdzać
-        $this->form->login = ParamUtils::getFromRequest('login');
+        $this->form->searchBar = ParamUtils::getFromRequest('login');
 
         // 2. sprawdzenie poprawności przekazanych parametrów
         // - nie trzeba sprawdzać
@@ -39,8 +39,8 @@ class UserListCtrl {
 
         // 2. Przygotowanie mapy z parametrami wyszukiwania (nazwa_kolumny => wartość)
         $search_params = []; //przygotowanie pustej struktury (aby była dostępna nawet gdy nie będzie zawierała wierszy)
-        if (isset($this->form->login) && strlen($this->form->login) > 0) {
-            $search_params['login[~]'] = $this->form->login . '%'; // dodanie symbolu % zastępuje dowolny ciąg znaków na końcu
+        if (isset($this->form->searchBar) && strlen($this->form->searchBar) > 0) {
+            $search_params['login[~]'] = $this->form->searchBar . '%'; // dodanie symbolu % zastępuje dowolny ciąg znaków na końcu
         }
 
         // 3. Pobranie listy rekordów z bazy danych

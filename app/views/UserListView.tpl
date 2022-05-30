@@ -7,7 +7,7 @@
             <form method="post" action="{$conf->action_root}userList">
                 <div class="row gtr-uniform">
                     <div class="col-6 col-12-xsmall">
-                        <input type="text" name="login" id="login" value="{$searchForm->login}" /><br>
+                        <input type="text" name="login" id="login" value="{$searchForm->searchBar}" /><br>
                         <input type="submit" value="Szukaj" class="button primary"></li>
                         <a class="button primary" href="{$conf->action_url}userNew">Dodaj użytkownika</a>
                     </div>

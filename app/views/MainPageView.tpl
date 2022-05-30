@@ -47,7 +47,12 @@
                                 <td>{$book["releaseDate"]}</td>
                                 <td>{$book["page"]}</td>
                                 <td>
-                                    <a class="button small" href="{$conf->action_url}bookBorrow/{$book['idBook']}">Zarezerwuj</a>
+                                    {if isset($user->role)&&strcmp($user->role,"libraryAdmin")==0}
+                                        <a class="button small" href="{$conf->action_url}bookHistoryShow/{$book['idBook']}">Historia</a>
+                                    {/if}
+                                    {if !isset($user->role)||strcmp($user->role,"user")==0}
+                                        <a class="button small" href="{$conf->action_url}bookBorrow/{$book['idBook']}">Zarezerwuj</a>
+                                    {/if}
                                 </td>
                             </tr>
                         {/strip}

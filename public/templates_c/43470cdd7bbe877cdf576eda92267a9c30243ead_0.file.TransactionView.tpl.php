@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.1.0, created on 2022-05-29 22:10:56
+/* Smarty version 4.1.0, created on 2022-05-30 15:26:31
   from 'E:\xampp\htdocs\projectPHP\app\views\TransactionView.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.1.0',
-  'unifunc' => 'content_6293d3505afdb7_09203712',
+  'unifunc' => 'content_6294c6074e4d86_57296511',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '43470cdd7bbe877cdf576eda92267a9c30243ead' => 
     array (
       0 => 'E:\\xampp\\htdocs\\projectPHP\\app\\views\\TransactionView.tpl',
-      1 => 1653855055,
+      1 => 1653916593,
       2 => 'file',
     ),
   ),
@@ -21,22 +21,22 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:messages.tpl' => 1,
   ),
 ),false)) {
-function content_6293d3505afdb7_09203712 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6294c6074e4d86_57296511 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_10394882026293d350598601_29398737', 'content');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_19972788496294c6074a35e3_56406991', 'content');
 $_smarty_tpl->inheritance->endChild($_smarty_tpl, "main.tpl");
 }
 /* {block 'content'} */
-class Block_10394882026293d350598601_29398737 extends Smarty_Internal_Block
+class Block_19972788496294c6074a35e3_56406991 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_10394882026293d350598601_29398737',
+    0 => 'Block_19972788496294c6074a35e3_56406991',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -79,7 +79,9 @@ $_smarty_tpl->tpl_vars['transaction']->do_else = false;
 </td><td><?php if (!(isset($_smarty_tpl->tpl_vars['transaction']->value["borrowDate"])) && !(isset($_smarty_tpl->tpl_vars['transaction']->value["returnDate"])) && !(isset($_smarty_tpl->tpl_vars['transaction']->value["cancelReservationDate"]))) {?><a class="button small" href="<?php echo $_smarty_tpl->tpl_vars['conf']->value->action_url;?>
 bookBorrowCancel/<?php echo $_smarty_tpl->tpl_vars['transaction']->value['idTransaction'];?>
 /<?php echo $_smarty_tpl->tpl_vars['transaction']->value['idBook'];?>
-">Odrezerwuj</a><?php } else { ?><p>Transakcja zakończona</p><?php }?></td></tr>
+">Odrezerwuj</a><?php }
+if ((isset($_smarty_tpl->tpl_vars['transaction']->value["reservationDate"])) && ((isset($_smarty_tpl->tpl_vars['transaction']->value["returnDate"])) || (isset($_smarty_tpl->tpl_vars['transaction']->value["cancelReservationDate"])))) {?><p>Transakcja zakończona</p><?php }
+if ((isset($_smarty_tpl->tpl_vars['transaction']->value["borrowDate"])) && !(isset($_smarty_tpl->tpl_vars['transaction']->value["returnDate"]))) {?><p>Transakcja w toku</p><?php }?></td></tr>
                         <?php
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>

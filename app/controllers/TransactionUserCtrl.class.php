@@ -45,7 +45,7 @@ class TransactionUserCtrl
                 App::getDB()->insert("transaction", [
                     "idUser" => Utils::getUserIdByLogin($this->user->login),
                     "idBook" => $this->bookId,
-                    "reservationDate" => date("Y-m-d"),
+                    "reservationDate" => date("Y-m-d")
                 ]);
                 App::getDB()->update("book", [
                     "available" => "no"
@@ -113,7 +113,8 @@ class TransactionUserCtrl
                     "transaction.cancelReservationDate"
                 ],
                 [
-                    "user.login" => $this->user->login
+                    "user.login" => $this->user->login,
+                    "ORDER" => ["reservationDate" => "DESC"]
                 ]);
         } catch (\PDOException $e) {
             Utils::addErrorMessage('Wystąpił błąd podczas pobierania rekordów');

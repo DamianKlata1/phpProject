@@ -33,8 +33,8 @@ class LoginCtrl{
         if (empty($this->form->pass)) {
             Utils::addErrorMessage('Nie podano hasła');
         }
-        if(!Utils::isUserActive($this->form->login)){
-            Utils::addErrorMessage('Twoje konto jest niaktywne');
+        if(Utils::isUserDeactivated($this->form->login)){
+            Utils::addErrorMessage('Twoje Konto jest niaktywne');
         }
 
         //nie ma sensu walidować dalej, gdy brak wartości

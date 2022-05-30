@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.1.0, created on 2022-05-29 20:53:41
+/* Smarty version 4.1.0, created on 2022-05-30 15:56:28
   from 'E:\xampp\htdocs\projectPHP\app\views\MainPageView.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.1.0',
-  'unifunc' => 'content_6293c135433cb5_81659249',
+  'unifunc' => 'content_6294cd0c409ed1_37341153',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'a43a2c27b17194c3c3e6c58d09277c796fcd8a64' => 
     array (
       0 => 'E:\\xampp\\htdocs\\projectPHP\\app\\views\\MainPageView.tpl',
-      1 => 1653850418,
+      1 => 1653918984,
       2 => 'file',
     ),
   ),
@@ -21,22 +21,22 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:messages.tpl' => 1,
   ),
 ),false)) {
-function content_6293c135433cb5_81659249 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6294cd0c409ed1_37341153 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_776208046293c13541c1d3_00209712', 'content');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_20928244786294cd0c3ec043_52083146', 'content');
 $_smarty_tpl->inheritance->endChild($_smarty_tpl, "main.tpl");
 }
 /* {block 'content'} */
-class Block_776208046293c13541c1d3_00209712 extends Smarty_Internal_Block
+class Block_20928244786294cd0c3ec043_52083146 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_776208046293c13541c1d3_00209712',
+    0 => 'Block_20928244786294cd0c3ec043_52083146',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -93,9 +93,12 @@ $_smarty_tpl->tpl_vars['book']->do_else = false;
 </td><td><?php echo $_smarty_tpl->tpl_vars['book']->value["publisher"];?>
 </td><td><?php echo $_smarty_tpl->tpl_vars['book']->value["releaseDate"];?>
 </td><td><?php echo $_smarty_tpl->tpl_vars['book']->value["page"];?>
-</td><td><a class="button small" href="<?php echo $_smarty_tpl->tpl_vars['conf']->value->action_url;?>
+</td><td><?php if ((isset($_smarty_tpl->tpl_vars['user']->value->role)) && strcmp($_smarty_tpl->tpl_vars['user']->value->role,"libraryAdmin") == 0) {?><a class="button small" href="<?php echo $_smarty_tpl->tpl_vars['conf']->value->action_url;?>
+bookHistoryShow/<?php echo $_smarty_tpl->tpl_vars['book']->value['idBook'];?>
+">Historia</a><?php }
+if (!(isset($_smarty_tpl->tpl_vars['user']->value->role)) || strcmp($_smarty_tpl->tpl_vars['user']->value->role,"user") == 0) {?><a class="button small" href="<?php echo $_smarty_tpl->tpl_vars['conf']->value->action_url;?>
 bookBorrow/<?php echo $_smarty_tpl->tpl_vars['book']->value['idBook'];?>
-">Zarezerwuj</a></td></tr>
+">Zarezerwuj</a><?php }?></td></tr>
                         <?php }?>
                     <?php
 }

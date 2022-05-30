@@ -79,7 +79,6 @@ class RegisterCtrl{
 
     public function action_register(){
         {
-            $role="user";
             // 1. Walidacja danych formularza (z pobraniem)
             if ($this->validate()) {
                 // 2. Zapis danych w bazie

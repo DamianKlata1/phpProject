@@ -76,10 +76,10 @@ class Utils {
                 "idUser[!]" =>$id
         ]]);
     }
-    public static function isUserActive($login){
+    public static function isUserDeactivated($login){
         return App::getDb()->has("user",[
             "AND" =>[
-                "active" => "yes",
+                "active" => "no",
                 "login" => $login
             ]]);
     }

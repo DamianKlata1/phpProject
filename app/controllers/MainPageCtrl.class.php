@@ -12,7 +12,7 @@
 namespace app\controllers;
 
 //zamieniamy zatem 'require' na 'use' wskazując jedynie przestrzeń nazw, w której znajduje się klasa
-use app\forms\BookSearchForm;
+use app\forms\SearchForm;
 use core\App;
 use core\Utils;
 use core\ParamUtils;
@@ -25,7 +25,7 @@ class MainPageCtrl {
 
     public function __construct() {
         //stworzenie potrzebnych obiektów
-        $this->form = new BookSearchForm();
+        $this->form = new SearchForm();
     }
 
     public function validate() {
@@ -51,6 +51,7 @@ class MainPageCtrl {
         $search_params = []; //przygotowanie pustej struktury (aby była dostępna nawet gdy nie będzie zawierała wierszy)
         if (isset($this->form->searchBar) && strlen($this->form->searchBar) > 0) {
             $search_params['title[~]'] = $this->form->searchBar . '%'; // dodanie symbolu % zastępuje dowolny ciąg znaków na końcu
+            $search_params['author[~]'] = $this->form->searchBar . '%'; // dodanie symbolu % zastępuje dowolny ciąg znaków na końcu
         }
 
         // 3. Pobranie listy rekordów z bazy danych
@@ -59,7 +60,7 @@ class MainPageCtrl {
         //przygotowanie frazy where na wypadek większej liczby parametrów
         $num_params = sizeof($search_params);
         if ($num_params > 1) {
-            $where = ["AND" => &$search_params];
+            $where = ["OR" => &$search_params];
         } else {
             $where = &$search_params;
         }

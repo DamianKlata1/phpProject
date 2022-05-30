@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.1.0, created on 2022-05-29 22:27:51
+/* Smarty version 4.1.0, created on 2022-05-30 20:05:46
   from 'E:\xampp\htdocs\projectPHP\app\views\templates\main.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.1.0',
-  'unifunc' => 'content_6293d7479b3ec5_43268955',
+  'unifunc' => 'content_6295077ad53176_18140489',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'dca6c32ce39b76387d8bcdc712b31749bdbb7349' => 
     array (
       0 => 'E:\\xampp\\htdocs\\projectPHP\\app\\views\\templates\\main.tpl',
-      1 => 1653856069,
+      1 => 1653933945,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6293d7479b3ec5_43268955 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6295077ad53176_18140489 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, false);
 ?>
@@ -77,6 +77,8 @@ transactionUserShow">Moje transakcje</a></li>
                     <?php if (strcmp($_smarty_tpl->tpl_vars['user']->value->role,"libraryAdmin") == 0) {?>
                         <li><a href="<?php echo $_smarty_tpl->tpl_vars['conf']->value->action_root;?>
 transactionAdminShow">Transakcje w systemie</a></li>
+                        <li><a href="<?php echo $_smarty_tpl->tpl_vars['conf']->value->action_root;?>
+bookAdd">Dodaj książke</a></li>
                     <?php }?>
 
                 <?php } else { ?>
@@ -93,45 +95,25 @@ mainPageShow">Strona główna</a></li>
         </div>
     </nav>
     <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_6037920476293d7479af538_37027446', 'content');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_2223798946295077ad4eb13_82111188', 'content');
 ?>
 
 
     <!-- Footer -->
     <section id="footer">
         <div class="inner">
-            <h2 class="major">Get in touch</h2>
-            <p>Cras mattis ante fermentum, malesuada neque vitae, eleifend erat. Phasellus non pulvinar erat. Fusce tincidunt, nisl eget mattis egestas, purus ipsum consequat orci, sit amet lobortis lorem lacus in tellus. Sed ac elementum arcu. Quisque placerat auctor laoreet.</p>
-            <form method="post" action="#">
-                <div class="fields">
-                    <div class="field">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="name" />
-                    </div>
-                    <div class="field">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" />
-                    </div>
-                    <div class="field">
-                        <label for="message">Message</label>
-                        <textarea name="message" id="message" rows="4"></textarea>
-                    </div>
-                </div>
-                <ul class="actions">
-                    <li><input type="submit" value="Send Message" /></li>
-                </ul>
-            </form>
+            <h2 class="major">Skontaktuj się z nami</h2>
             <ul class="contact">
                 <li class="icon solid fa-home">
-                    Untitled Inc<br />
-                    1234 Somewhere Road Suite #2894<br />
-                    Nashville, TN 00000-0000
+                    Biblioteka Online<br />
+                    Wojska Polskiego 21<br />
+                    Sosnowiec,41-200
                 </li>
-                <li class="icon solid fa-phone">(000) 000-0000</li>
-                <li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-                <li class="icon brands fa-twitter"><a href="#">twitter.com/untitled-tld</a></li>
-                <li class="icon brands fa-facebook-f"><a href="#">facebook.com/untitled-tld</a></li>
-                <li class="icon brands fa-instagram"><a href="#">instagram.com/untitled-tld</a></li>
+                <li class="icon solid fa-phone">(12) 345-6789</li>
+                <li class="icon solid fa-envelope"><a href="#">biblioteka@online.pl</a></li>
+                <li class="icon brands fa-twitter"><a href="#">twitter.com/bibliotekaOnline</a></li>
+                <li class="icon brands fa-facebook-f"><a href="#">facebook.com/bibliotekaOnline</a></li>
+                <li class="icon brands fa-instagram"><a href="#">instagram.com/bibliotekaOnline</a></li>
             </ul>
             <ul class="copyright">
                 <li>&copy; Untitled Inc. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
@@ -170,12 +152,12 @@ $_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_6037920476293d7479
 </body>
 </html><?php }
 /* {block 'content'} */
-class Block_6037920476293d7479af538_37027446 extends Smarty_Internal_Block
+class Block_2223798946295077ad4eb13_82111188 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_6037920476293d7479af538_37027446',
+    0 => 'Block_2223798946295077ad4eb13_82111188',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
