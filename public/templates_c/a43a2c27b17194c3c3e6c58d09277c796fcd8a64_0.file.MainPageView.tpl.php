@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.1.0, created on 2022-05-30 15:56:28
+/* Smarty version 4.1.0, created on 2022-06-06 19:36:23
   from 'E:\xampp\htdocs\projectPHP\app\views\MainPageView.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.1.0',
-  'unifunc' => 'content_6294cd0c409ed1_37341153',
+  'unifunc' => 'content_629e3b17b19251_86138414',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'a43a2c27b17194c3c3e6c58d09277c796fcd8a64' => 
     array (
       0 => 'E:\\xampp\\htdocs\\projectPHP\\app\\views\\MainPageView.tpl',
-      1 => 1653918984,
+      1 => 1654536674,
       2 => 'file',
     ),
   ),
@@ -21,22 +21,22 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:messages.tpl' => 1,
   ),
 ),false)) {
-function content_6294cd0c409ed1_37341153 (Smarty_Internal_Template $_smarty_tpl) {
+function content_629e3b17b19251_86138414 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_20928244786294cd0c3ec043_52083146', 'content');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1548739338629e3b17af1ba9_02406106', 'content');
 $_smarty_tpl->inheritance->endChild($_smarty_tpl, "main.tpl");
 }
 /* {block 'content'} */
-class Block_20928244786294cd0c3ec043_52083146 extends Smarty_Internal_Block
+class Block_1548739338629e3b17af1ba9_02406106 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_20928244786294cd0c3ec043_52083146',
+    0 => 'Block_1548739338629e3b17af1ba9_02406106',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -105,13 +105,38 @@ bookBorrow/<?php echo $_smarty_tpl->tpl_vars['book']->value['idBook'];?>
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="5"></td>
+                        <td><ul class="pagination">
+                                <li><a href="<?php if ($_smarty_tpl->tpl_vars['pageno']->value <= 1) {?># <?php } else {
+echo $_smarty_tpl->tpl_vars['conf']->value->action_url;?>
+bookList/<?php echo $_smarty_tpl->tpl_vars['pageno']->value-1;?>
+/<?php echo $_smarty_tpl->tpl_vars['searchForm']->value->searchBar;
+}?>"
+                                       class="<?php if ($_smarty_tpl->tpl_vars['pageno']->value <= 1) {?>button small disabled<?php } else { ?>button small<?php }?>">Prev</a></li>
+                                <li><a href="<?php if ($_smarty_tpl->tpl_vars['pageno']->value >= $_smarty_tpl->tpl_vars['total_pages']->value) {?> #<?php } else {
+echo $_smarty_tpl->tpl_vars['conf']->value->action_url;?>
+bookList/<?php echo $_smarty_tpl->tpl_vars['pageno']->value+1;?>
+/<?php echo $_smarty_tpl->tpl_vars['searchForm']->value->searchBar;
+}?>"
+                                       class="<?php if ($_smarty_tpl->tpl_vars['pageno']->value >= $_smarty_tpl->tpl_vars['total_pages']->value) {?>button small disabled<?php } else { ?>button small<?php }?>">Next</a></li>
+                            </ul></td>
+                    </tr>
+
+                    </tfoot>
                 </table>
-	<?php }?>
+
+
 
             </div>
 
+
         </section>
 
+
+
+    <?php }?>
         <!-- Two -->
         <!-- Three -->
 <?php

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.1.0, created on 2022-05-30 15:29:38
+/* Smarty version 4.1.0, created on 2022-06-06 21:03:38
   from 'E:\xampp\htdocs\projectPHP\app\views\TransactionViewAdmin.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.1.0',
-  'unifunc' => 'content_6294c6c2e3dc70_19069605',
+  'unifunc' => 'content_629e4f8a297dd1_00844050',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'a97e1c5aa5f0b70fcaa72d9b746378b2ac7266db' => 
     array (
       0 => 'E:\\xampp\\htdocs\\projectPHP\\app\\views\\TransactionViewAdmin.tpl',
-      1 => 1653917376,
+      1 => 1654542008,
       2 => 'file',
     ),
   ),
@@ -21,22 +21,22 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:messages.tpl' => 1,
   ),
 ),false)) {
-function content_6294c6c2e3dc70_19069605 (Smarty_Internal_Template $_smarty_tpl) {
+function content_629e4f8a297dd1_00844050 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_4587833476294c6c2e1ea40_54663198', 'content');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1602450391629e4f8a26e868_01719109', 'content');
 $_smarty_tpl->inheritance->endChild($_smarty_tpl, "main.tpl");
 }
 /* {block 'content'} */
-class Block_4587833476294c6c2e1ea40_54663198 extends Smarty_Internal_Block
+class Block_1602450391629e4f8a26e868_01719109 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_4587833476294c6c2e1ea40_54663198',
+    0 => 'Block_1602450391629e4f8a26e868_01719109',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -101,6 +101,24 @@ if (((isset($_smarty_tpl->tpl_vars['transaction']->value["reservationDate"])) &&
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5"></td>
+                            <td><ul class="pagination">
+                                    <li><a href="<?php if ($_smarty_tpl->tpl_vars['pageno']->value <= 1) {?># <?php } else {
+echo $_smarty_tpl->tpl_vars['conf']->value->action_url;?>
+transactionAdminShow/<?php echo $_smarty_tpl->tpl_vars['pageno']->value-1;
+}?>"
+                                           class="<?php if ($_smarty_tpl->tpl_vars['pageno']->value <= 1) {?>button small disabled<?php } else { ?>button small<?php }?>">Prev</a></li>
+                                    <li><a href="<?php if ($_smarty_tpl->tpl_vars['pageno']->value >= $_smarty_tpl->tpl_vars['total_pages']->value) {?> #<?php } else {
+echo $_smarty_tpl->tpl_vars['conf']->value->action_url;?>
+transactionAdminShow/<?php echo $_smarty_tpl->tpl_vars['pageno']->value+1;
+}?>"
+                                           class="<?php if ($_smarty_tpl->tpl_vars['pageno']->value >= $_smarty_tpl->tpl_vars['total_pages']->value) {?>button small disabled<?php } else { ?>button small<?php }?>">Next</a></li>
+                                </ul></td>
+                        </tr>
+
+                        </tfoot>
                     </table>
                     <?php } else { ?>
                     <p>Brak transakcji w systemie</p>

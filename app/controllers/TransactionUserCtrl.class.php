@@ -13,11 +13,29 @@ class TransactionUserCtrl
     private $bookId;
     private $records;
     private $transactionId;
+    private $totalPages;
+    private $pageNo;
+    private $recordsOnOnePage=10;
+    private $offset;
 
     public function __construct()
     {
         //stworzenie potrzebnych obiektów
         $this->user = SessionUtils::loadObject('user', true);
+
+    }
+    public function validatePagination(){
+        $this->pageNo=ParamUtils::getFromCleanURL(1);
+        return isset($this->pageNo);
+    }
+    public function pagination()
+    {
+        if (!$this->validatePagination()) {
+            $this->pageNo = 1;
+        }
+
+        $this->pageNo = intval($this->pageNo);
+        $this->offset = ($this->pageNo - 1) * $this->recordsOnOnePage;
 
     }
 
@@ -58,7 +76,7 @@ class TransactionUserCtrl
                 if (App::getConf()->debug)
                     Utils::addErrorMessage($e->getMessage());
             }
-            App::getRouter()->forwardTo('transactionUserShow');
+            App::getRouter()->redirectTo('transactionUserShow');
         } else {
             // 3c. Gdy błąd walidacji to pozostań na stronie
             App::getRouter()->forwardTo('MainPageShow');
@@ -86,7 +104,7 @@ class TransactionUserCtrl
                 if (App::getConf()->debug)
                     Utils::addErrorMessage($e->getMessage());
             }
-            App::getRouter()->forwardTo('transactionUserShow');
+            App::getRouter()->redirectTo('transactionUserShow');
         } else {
             // 3c. Gdy błąd walidacji to pozostań na stronie
             $this->generateView();
@@ -95,6 +113,7 @@ class TransactionUserCtrl
 
     public function action_transactionUserShow()
     {
+        $this->pagination();
         try {
             $this->records = App::getDB()->select("transaction",
                 [
@@ -114,19 +133,23 @@ class TransactionUserCtrl
                 ],
                 [
                     "user.login" => $this->user->login,
-                    "ORDER" => ["reservationDate" => "DESC"]
+                    "ORDER" => ["reservationDate" => "DESC"],
+                    "LIMIT" => [$this->offset, $this->recordsOnOnePage]
                 ]);
         } catch (\PDOException $e) {
             Utils::addErrorMessage('Wystąpił błąd podczas pobierania rekordów');
             if (App::getConf()->debug)
                 Utils::addErrorMessage($e->getMessage());
         }
+        $this->totalPages=ceil(count($this->records)/$this->recordsOnOnePage);
         $this->generateView();
     }
 
 
     public function generateView()
     {
+        App::getSmarty()->assign('total_pages', $this->totalPages);
+        App::getSmarty()->assign('pageno', $this->pageNo);
 
         App::getSmarty()->assign('user', $this->user);
 

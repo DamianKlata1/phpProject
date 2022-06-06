@@ -30,6 +30,5 @@ Utils::addRoute('bookAdd',              'BookAddCtrl',          ['libraryAdmin']
 
 
 
-//Utils::addRoute('addBook',        'BookCtrl' ,     ['libraryAdmin']);
 
 

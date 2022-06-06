@@ -1,4 +1,4 @@
--- MariaDB dump 10.19  Distrib 10.4.24-MariaDB, for Win64 (AMD64)
+ -- MariaDB dump 10.19  Distrib 10.4.24-MariaDB, for Win64 (AMD64)
 --
 -- Host: localhost    Database: project
 -- ------------------------------------------------------
@@ -31,7 +31,7 @@ CREATE TABLE `book` (
   `publisher` varchar(45) COLLATE utf8mb4_polish_ci DEFAULT NULL,
   `available` varchar(3) COLLATE utf8mb4_polish_ci DEFAULT NULL,
   PRIMARY KEY (`idBook`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (11,'Zachowaj spokój','Harlan Coben','2008-04-15',432,'Albatros','yes'),(12,'Gdzie śpiewają raki','Delia Owens','2019-11-13',416,'Świat książki','yes'),(13,'Mentalista','Henrik Fexeus','2022-03-16',680,'Czarna Owca','yes'),(14,'Wstyd','Robert Małecki','2022-04-13',408,'Czwarta Strona','yes'),(15,'Hobbit,czyli tam i z powrotem','J.R.R Tolkien','1937-09-21',314,'Wydawnictwo Iskry','yes'),(16,'Drużyna pierścienia','J.R.R Tolkien','1954-07-29',448,'Amber','yes'),(17,'Nie mów nikomu','Harlan Coben','2001-06-19',400,'Albatros','yes');
+INSERT INTO `book` VALUES (11,'Zachowaj spokój','Harlan Coben','2008-04-15',432,'Albatros','yes'),(12,'Gdzie śpiewają raki','Delia Owens','2019-11-13',416,'Świat książki','yes'),(13,'Mentalista','Henrik Fexeus','2022-03-16',680,'Czarna Owca','yes'),(14,'Wstyd','Robert Małecki','2022-04-13',408,'Czwarta Strona','yes'),(15,'Hobbit,czyli tam i z powrotem','J.R.R Tolkien','1937-09-21',314,'Wydawnictwo Iskry','yes'),(16,'Drużyna pierścienia','J.R.R Tolkien','1954-07-29',448,'Amber','yes'),(17,'Nie mów nikomu','Harlan Coben','2001-06-19',400,'Albatros','yes'),(18,'asdasd','asdasd','0001-01-01',100,'asdasd','yes'),(19,'asdasdasd','ASDASD','0001-01-01',100,'asdasd','yes'),(20,'asdasdasd','ASDASD','0001-01-01',111,'1asdasd','yes'),(21,'asdasdasd','asdasdasd','0001-01-01',222,'asdasdasd','yes'),(22,'aaa','aaa','2022-05-15',111,'PWN','yes'),(23,'aaa','Steven Spielberg','2022-05-15',100,'PWN','yes'),(24,'aaa','Steven Spielberg','2022-05-15',100,'PWN','yes'),(25,'aaa','aaa','0001-01-01',111,'asdasd',NULL),(26,'aaa','Steven Spielberg','2022-05-15',100,'PWN','yes'),(27,'aaa','Steven Spielberg','2022-05-15',100,'PWN','yes'),(28,'aaa','Steven Spielberg','2022-05-15',100,'PWN','yes'),(29,'aaa','Steven Spielberg','2022-05-15',100,'PWN','yes'),(30,'zzzz','zzzz','2022-05-15',100,'PWN','yes'),(31,'zzzz','zzzz','2022-05-15',100,'PWN','yes');
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +92,7 @@ CREATE TABLE `roleofuser` (
 
 LOCK TABLES `roleofuser` WRITE;
 /*!40000 ALTER TABLE `roleofuser` DISABLE KEYS */;
-INSERT INTO `roleofuser` VALUES (1,1);
+INSERT INTO `roleofuser` VALUES (1,1),(2,31),(3,32);
 /*!40000 ALTER TABLE `roleofuser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +116,7 @@ CREATE TABLE `transaction` (
   KEY `relTransactionUser` (`idUser`),
   CONSTRAINT `relTransactionBook` FOREIGN KEY (`idBook`) REFERENCES `book` (`idBook`),
   CONSTRAINT `relTransactionUser` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,6 +125,7 @@ CREATE TABLE `transaction` (
 
 LOCK TABLES `transaction` WRITE;
 /*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
+INSERT INTO `transaction` VALUES (20,32,20,'2022-06-06',NULL,NULL,'2022-06-06'),(21,32,22,'2022-06-06',NULL,NULL,'2022-06-06'),(22,32,28,'2022-06-06',NULL,NULL,'2022-06-06'),(23,32,23,'2022-06-06',NULL,NULL,'2022-06-06'),(24,32,24,'2022-06-06',NULL,NULL,'2022-06-06'),(25,32,22,'2022-06-06','2022-06-06','2022-06-06',NULL);
 /*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +145,7 @@ CREATE TABLE `user` (
   `e-mail` varchar(45) COLLATE utf8mb4_polish_ci DEFAULT NULL,
   `active` varchar(3) COLLATE utf8mb4_polish_ci DEFAULT NULL,
   PRIMARY KEY (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +154,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'sAdmin','sAdmin','Damian','Klata','damianklata@gmail.com','yes');
+INSERT INTO `user` VALUES (1,'sAdmin','sAdmin','Damian','Klata','damianklata@gmail.com','yes'),(31,'libraryAdmin','lAdmin','Damian','Klata','lAdmin@wp.pl','yes'),(32,'user1','user1','Damian','Klata','user1@mail.com','yes');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -166,4 +167,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-30 20:55:13
+-- Dump completed on 2022-06-06 21:54:00

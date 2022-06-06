@@ -60,13 +60,30 @@
                     {/foreach}
 
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="5"></td>
+                        <td><ul class="pagination">
+                                <li><a href="{if $pageno <= 1}# {else}{$conf->action_url}bookList/{$pageno - 1}/{$searchForm->searchBar}{/if}"
+                                       class="{if $pageno <= 1}button small disabled{else}button small{/if}">Prev</a></li>
+                                <li><a href="{if $pageno >= $total_pages} #{else}{$conf->action_url}bookList/{$pageno + 1}/{$searchForm->searchBar}{/if}"
+                                       class="{if $pageno >= $total_pages}button small disabled{else}button small{/if}">Next</a></li>
+                            </ul></td>
+                    </tr>
+
+                    </tfoot>
                 </table>
-	{/if}
+
+
 
             </div>
 
+
         </section>
 
+
+
+    {/if}
         <!-- Two -->
         <!-- Three -->
 {*    </section>*}

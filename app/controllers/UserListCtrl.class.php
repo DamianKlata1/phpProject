@@ -12,6 +12,10 @@ class UserListCtrl {
 
     private $form; //dane formularza wyszukiwania
     private $records; //rekordy pobrane z bazy danych
+    private $totalPages;
+    private $pageNo;
+    private $recordsOnOnePage=10;
+    private $offset;
 
     public function __construct() {
         //stworzenie potrzebnych obiektów
@@ -28,6 +32,20 @@ class UserListCtrl {
 
         return !App::getMessages()->isError();
     }
+    public function validatePagination(){
+        $this->pageNo=ParamUtils::getFromCleanURL(1);
+        return isset($this->pageNo);
+    }
+    public function pagination()
+    {
+        if (!$this->validatePagination()) {
+            $this->pageNo = 1;
+        }
+
+        $this->pageNo = intval($this->pageNo);
+        $this->offset = ($this->pageNo - 1) * $this->recordsOnOnePage;
+
+    }
 
 
     public function action_userList() {
@@ -36,7 +54,7 @@ class UserListCtrl {
         //   Jednak pozostawiono ją, ponieważ gdyby uzytkownik wprowadzał np. datę, lub wartość numeryczną, to trzeba
         //   odpowiednio zareagować wyświetlając odpowiednią informację (poprzez obiekt wiadomości Messages)
         $this->validate();
-
+        $this->pagination();
         // 2. Przygotowanie mapy z parametrami wyszukiwania (nazwa_kolumny => wartość)
         $search_params = []; //przygotowanie pustej struktury (aby była dostępna nawet gdy nie będzie zawierała wierszy)
         if (isset($this->form->searchBar) && strlen($this->form->searchBar) > 0) {
@@ -53,9 +71,15 @@ class UserListCtrl {
         } else {
             $where = &$search_params;
         }
+        $this->totalPages=ceil(App::getDB()->count("roleofuser",[
+                "[>]role" => ["idRole" => "idRole"],
+                "[>]user" => ["idUser" => "idUser"]
+            ],"roleofuser.idUser",
+                $where)/$this->recordsOnOnePage);
         //dodanie frazy sortującej po loginie
         $where ["ORDER"] = "login";
         //wykonanie zapytania
+        $where ["LIMIT"] = [$this->offset, $this->recordsOnOnePage];
 
         try {
             $this->records = App::getDB()->select("roleofuser",
@@ -83,6 +107,10 @@ class UserListCtrl {
         $this->generateView();
     }
     public function generateView(){
+        App::getSmarty()->assign('total_pages', $this->totalPages);
+        App::getSmarty()->assign('pageno', $this->pageNo);
+
+        App::getSmarty()->assign('page_title', 'Lista użytkowników');
         App::getSmarty()->assign('searchForm', $this->form); // dane formularza (wyszukiwania w tym wypadku)
         App::getSmarty()->assign('users', $this->records);  // lista rekordów z bazy danych
         App::getSmarty()->assign('user',SessionUtils::loadObject('user',true));

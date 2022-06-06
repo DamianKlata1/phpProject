@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.1.0, created on 2022-05-30 15:26:31
+/* Smarty version 4.1.0, created on 2022-06-06 21:05:48
   from 'E:\xampp\htdocs\projectPHP\app\views\TransactionView.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.1.0',
-  'unifunc' => 'content_6294c6074e4d86_57296511',
+  'unifunc' => 'content_629e500c227be8_57138616',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '43470cdd7bbe877cdf576eda92267a9c30243ead' => 
     array (
       0 => 'E:\\xampp\\htdocs\\projectPHP\\app\\views\\TransactionView.tpl',
-      1 => 1653916593,
+      1 => 1654541688,
       2 => 'file',
     ),
   ),
@@ -21,22 +21,22 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:messages.tpl' => 1,
   ),
 ),false)) {
-function content_6294c6074e4d86_57296511 (Smarty_Internal_Template $_smarty_tpl) {
+function content_629e500c227be8_57138616 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_19972788496294c6074a35e3_56406991', 'content');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_510296314629e500c202714_05769374', 'content');
 $_smarty_tpl->inheritance->endChild($_smarty_tpl, "main.tpl");
 }
 /* {block 'content'} */
-class Block_19972788496294c6074a35e3_56406991 extends Smarty_Internal_Block
+class Block_510296314629e500c202714_05769374 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_19972788496294c6074a35e3_56406991',
+    0 => 'Block_510296314629e500c202714_05769374',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -87,6 +87,24 @@ if ((isset($_smarty_tpl->tpl_vars['transaction']->value["borrowDate"])) && !(iss
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
 
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5"></td>
+                            <td><ul class="pagination">
+                                    <li><a href="<?php if ($_smarty_tpl->tpl_vars['pageno']->value <= 1) {?># <?php } else {
+echo $_smarty_tpl->tpl_vars['conf']->value->action_url;?>
+transactionUserShow/<?php echo $_smarty_tpl->tpl_vars['pageno']->value-1;
+}?>"
+                                           class="<?php if ($_smarty_tpl->tpl_vars['pageno']->value <= 1) {?>button small disabled<?php } else { ?>button small<?php }?>">Prev</a></li>
+                                    <li><a href="<?php if ($_smarty_tpl->tpl_vars['pageno']->value >= $_smarty_tpl->tpl_vars['total_pages']->value) {?> #<?php } else {
+echo $_smarty_tpl->tpl_vars['conf']->value->action_url;?>
+transactionUserShow/<?php echo $_smarty_tpl->tpl_vars['pageno']->value+1;
+}?>"
+                                           class="<?php if ($_smarty_tpl->tpl_vars['pageno']->value >= $_smarty_tpl->tpl_vars['total_pages']->value) {?>button small disabled<?php } else { ?>button small<?php }?>">Next</a></li>
+                                </ul></td>
+                        </tr>
+
+                        </tfoot>
                     </table>
                     <?php } else { ?>
                     <p>Nie masz aktualnie żadnych transakcji</p>

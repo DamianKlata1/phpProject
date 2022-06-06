@@ -16,12 +16,30 @@ class TransactionAdminCtrl
     private $records;
     private $transactionId;
     private $form;
+    private $totalPages;
+    private $pageNo;
+    private $recordsOnOnePage=10;
+    private $offset;
 
     public function __construct()
     {
         //stworzenie potrzebnych obiektów
 
         $this->form = new SearchForm();
+    }
+    public function validatePagination(){
+        $this->pageNo=ParamUtils::getFromCleanURL(1);
+        return isset($this->pageNo);
+    }
+    public function pagination()
+    {
+        if (!$this->validatePagination()) {
+            $this->pageNo = 1;
+        }
+
+        $this->pageNo = intval($this->pageNo);
+        $this->offset = ($this->pageNo - 1) * $this->recordsOnOnePage;
+
     }
 
     public function validateShow()
@@ -69,7 +87,7 @@ class TransactionAdminCtrl
                 if (App::getConf()->debug)
                     Utils::addErrorMessage($e->getMessage());
             }
-            App::getRouter()->forwardTo('transactionAdminShow');
+            App::getRouter()->redirectTo('transactionAdminShow');
         } else {
             // 3c. Gdy błąd walidacji to pozostań na stronie
             App::getRouter()->forwardTo('transactionAdminShow');
@@ -96,7 +114,7 @@ class TransactionAdminCtrl
                 if (App::getConf()->debug)
                     Utils::addErrorMessage($e->getMessage());
             }
-            App::getRouter()->forwardTo('transactionAdminShow');
+            App::getRouter()->redirectTo('transactionAdminShow');
         } else {
             // 3c. Gdy błąd walidacji to pozostań na stronie
             App::getRouter()->forwardTo('transactionAdminShow');
@@ -107,6 +125,7 @@ class TransactionAdminCtrl
     public function action_transactionAdminShow()
     {
         $this->validateShow();
+        $this->pagination();
         $search_params = []; //przygotowanie pustej struktury (aby była dostępna nawet gdy nie będzie zawierała wierszy)
         if (isset($this->form->searchBar) && strlen($this->form->searchBar) > 0) {
             $search_params['login[~]'] = $this->form->searchBar . '%'; // dodanie symbolu % zastępuje dowolny ciąg znaków na końcu
@@ -119,7 +138,14 @@ class TransactionAdminCtrl
             $where = &$search_params;
         }
         //dodanie frazy sortującej po loginie
+        $this->totalPages=ceil(App::getDB()->count("transaction",[
+                "[>]book" => ["idBook" => "idBook"],
+                "[>]user" => ["idUser" => "idUser"]
+                ],"idTransaction",
+                $where)/$this->recordsOnOnePage);
+
         $where ["ORDER"] = ["reservationDate" => "DESC"];
+        $where ["LIMIT"] = [$this->offset, $this->recordsOnOnePage];
         //wykonanie zapytania
 
         try {
@@ -184,6 +210,9 @@ class TransactionAdminCtrl
 
     public function generateView()
     {
+        App::getSmarty()->assign('total_pages', $this->totalPages);
+        App::getSmarty()->assign('pageno', $this->pageNo);
+
 
         App::getSmarty()->assign('user', SessionUtils::loadObject('user', true));
 

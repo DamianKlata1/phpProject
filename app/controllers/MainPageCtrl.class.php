@@ -22,22 +22,46 @@ class MainPageCtrl {
 
     private $form; //dane formularza wyszukiwania
     private $records; //rekordy pobrane z bazy danych
+    private $totalPages;
+    private $pageNo;
+    private $recordsOnOnePage=10;
+    private $offset;
 
     public function __construct() {
         //stworzenie potrzebnych obiektów
         $this->form = new SearchForm();
     }
+    public function validatePagination(){
+        $this->pageNo=ParamUtils::getFromCleanURL(1);
+        return isset($this->pageNo);
+    }
+    public function pagination()
+    {
+        if (!$this->validatePagination()) {
+            $this->pageNo = 1;
+        }
+
+        $this->pageNo = intval($this->pageNo);
+        $this->offset = ($this->pageNo - 1) * $this->recordsOnOnePage;
+
+    }
 
     public function validate() {
         // 1. sprawdzenie, czy parametry zostały przekazane
         // - nie trzeba sprawdzać
-        $this->form->searchBar = ParamUtils::getFromRequest('searchBar');
-
+        if(isset($_REQUEST['searchBar'])){
+            $this->form->searchBar = ParamUtils::getFromRequest('searchBar');
+        }
+        else{
+            $this->form->searchBar = ParamUtils::getFromCleanURL(2);
+        }
         // 2. sprawdzenie poprawności przekazanych parametrów
         // - nie trzeba sprawdzać
 
         return !App::getMessages()->isError();
     }
+
+
 
 
     public function action_bookList() {
@@ -46,6 +70,7 @@ class MainPageCtrl {
         //   Jednak pozostawiono ją, ponieważ gdyby uzytkownik wprowadzał np. datę, lub wartość numeryczną, to trzeba
         //   odpowiednio zareagować wyświetlając odpowiednią informację (poprzez obiekt wiadomości Messages)
         $this->validate();
+        $this->pagination();
 
         // 2. Przygotowanie mapy z parametrami wyszukiwania (nazwa_kolumny => wartość)
         $search_params = []; //przygotowanie pustej struktury (aby była dostępna nawet gdy nie będzie zawierała wierszy)
@@ -64,8 +89,10 @@ class MainPageCtrl {
         } else {
             $where = &$search_params;
         }
+        $this->totalPages=ceil(App::getDB()->count("book",$where)/$this->recordsOnOnePage);
         //dodanie frazy sortującej po loginie
         $where ["ORDER"] = "title";
+        $where ["LIMIT"] = [$this->offset, $this->recordsOnOnePage];
         //wykonanie zapytania
 
         try {
@@ -85,8 +112,8 @@ class MainPageCtrl {
             if (App::getConf()->debug)
                 Utils::addErrorMessage($e->getMessage());
         }
-
         // 4. wygeneruj widok
+
         $this->generateView();
     }
 
@@ -100,6 +127,8 @@ class MainPageCtrl {
      * Wygenerowanie widoku
      */
     public function generateView(){
+        App::getSmarty()->assign('total_pages', $this->totalPages);
+        App::getSmarty()->assign('pageno', $this->pageNo);
 
         App::getSmarty()->assign('user',SessionUtils::loadObject('user',true));
 
